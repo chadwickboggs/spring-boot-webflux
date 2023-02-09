@@ -20,10 +20,10 @@ public class StockController {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Flux<String> addStock(
+    public Flux<Stock> addStock(
             @NonNull @RequestBody final Stock stock
     ) {
-        return Flux.just( String.valueOf( stockService.addStock( stock ) ) );
+        return stockService.addStock( stock );
     }
 
 /*
@@ -42,10 +42,10 @@ public class StockController {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Flux<String> removeStock(
+    public Flux<Stock> removeStock(
             @NonNull @PathVariable( "name" ) final String name
     ) {
-        return Flux.just( String.valueOf( stockService.removeStock( name ) ) );
+        return stockService.removeStock( name );
     }
 
 /*
@@ -66,7 +66,7 @@ public class StockController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Flux<Stock> findByName(
+    public Flux<Stock> findStock(
             @PathVariable( "name" ) @Nullable final String name
     ) {
         if ( StringUtils.isBlank( name ) ) {
