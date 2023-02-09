@@ -23,6 +23,18 @@ public class StockService {
         return Flux.just( stock );
     }
 
+    public Flux<Stock> updateStock( @NonNull final Stock stock ) {
+        if ( !stocks.containsKey( stock.getName() ) ) {
+            return addStock( stock );
+        }
+
+        validate( stock );
+
+        stocks.put( stock.getName(), stock );
+
+        return Flux.just( stock );
+    }
+
     public boolean containsStock( @NonNull final Stock stock ) {
         return containsStock( stock.getName() );
     }

@@ -26,6 +26,18 @@ public class StockController {
         return stockService.addStock( stock );
     }
 
+    @NonNull
+    @RequestMapping(
+            value = "stock",
+            method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public Flux<Stock> updateStock(
+            @NonNull @RequestBody final Stock stock
+    ) {
+        return stockService.updateStock( stock );
+    }
+
 /*
     @NonNull
     @RequestMapping( method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE )
