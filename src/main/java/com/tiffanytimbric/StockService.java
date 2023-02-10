@@ -102,7 +102,7 @@ public class StockService {
         double price = stock.getPrice();
         if ( price <= 0.0D ) {
             throw new IllegalArgumentException( String.format(
-                    "Parameter \"price\" must have a positive value.  Value: %d", price
+                    "Parameter \"price\" must have a positive value.  Value: %g", price
             ) );
         }
     }
