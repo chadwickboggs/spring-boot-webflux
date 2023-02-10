@@ -96,8 +96,13 @@ public class StockService {
     private void validate( @NonNull final Stock stock ) {
         final String name = stock.getName();
         if ( StringUtils.isBlank( name ) ) {
+            throw new IllegalArgumentException( "Parameter \"name\" must be non-null and non-empty." );
+        }
+
+        double price = stock.getPrice();
+        if ( price <= 0.0D ) {
             throw new IllegalArgumentException( String.format(
-                    "Parameter \"%s\" must be non-null and non-empty", name
+                    "Parameter \"price\" must have a positive value.  Value: %d", price
             ) );
         }
     }
