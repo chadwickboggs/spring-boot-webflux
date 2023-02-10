@@ -54,6 +54,16 @@ public class StockService {
         return Flux.just( stock );
     }
 
+    @org.springframework.lang.NonNull
+    public Flux<Stock> removeAllStocks() {
+        final Stock[] removedStocks = stocks.values().toArray( new Stock[0] ).clone();
+
+        stocks.clear();
+
+        return Flux.just( removedStocks );
+    }
+
+    @org.springframework.lang.NonNull
     public Flux<Stock> removeStock( @NonNull final String name ) {
         if ( !stocks.containsKey( name ) ) {
             return Flux.empty();

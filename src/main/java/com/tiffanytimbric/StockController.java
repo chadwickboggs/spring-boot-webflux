@@ -54,13 +54,22 @@ public class StockController {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
+    public Flux<Stock> removeAllStocks() {
+        return stockService.removeAllStocks();
+    }
+
+    @NonNull
+    @RequestMapping(
+            value = "stock/{name}",
+            method = RequestMethod.DELETE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
     public Flux<Stock> removeStock(
-            @NonNull @PathVariable( "name" ) final String name
+            @NonNull @PathVariable final String name
     ) {
         return stockService.removeStock( name );
     }
 
-/*
     @NonNull
     @RequestMapping(
             value = "stock",
@@ -70,16 +79,15 @@ public class StockController {
     public Flux<Stock> findAll() {
         return stockService.findAll();
     }
-*/
 
     @NonNull
     @RequestMapping(
-            value = "stock",
+            value = "stock/{name}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public Flux<Stock> findStock(
-            @PathVariable( "name" ) @Nullable final String name
+            @PathVariable @Nullable final String name
     ) {
         if ( StringUtils.isBlank( name ) ) {
             return stockService.findAll();
