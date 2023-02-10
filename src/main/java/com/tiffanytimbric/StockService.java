@@ -3,6 +3,7 @@ package com.tiffanytimbric;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.util.annotation.NonNull;
 
 import java.util.Collections;
@@ -15,15 +16,15 @@ public class StockService {
     private final Map<String, Stock> stocks = Collections.synchronizedMap( new HashMap<>() );
 
 
-    public Flux<Stock> addStock( @NonNull final Stock stock ) {
+    public Mono<Stock> addStock( @NonNull final Stock stock ) {
         validate( stock );
 
         stocks.put( stock.getName(), stock );
 
-        return Flux.just( stock );
+        return Mono.just( stock );
     }
 
-    public Flux<Stock> updateStock( @NonNull final Stock stock ) {
+    public Mono<Stock> updateStock( @NonNull final Stock stock ) {
         if ( !stocks.containsKey( stock.getName() ) ) {
             return addStock( stock );
         }
@@ -32,7 +33,7 @@ public class StockService {
 
         stocks.put( stock.getName(), stock );
 
-        return Flux.just( stock );
+        return Mono.just( stock );
     }
 
     public boolean containsStock( @NonNull final Stock stock ) {
@@ -43,15 +44,15 @@ public class StockService {
         return stocks.containsKey( stockName );
     }
 
-    public Flux<Stock> removeStock( @NonNull final Stock stock ) {
+    public Mono<Stock> removeStock( @NonNull final Stock stock ) {
         final String name = stock.getName();
         if ( !stocks.containsKey( name ) ) {
-            return Flux.empty();
+            return Mono.empty();
         }
 
         stocks.remove( name );
 
-        return Flux.just( stock );
+        return Mono.just( stock );
     }
 
     @org.springframework.lang.NonNull
@@ -64,24 +65,24 @@ public class StockService {
     }
 
     @org.springframework.lang.NonNull
-    public Flux<Stock> removeStock( @NonNull final String name ) {
+    public Mono<Stock> removeStock( @NonNull final String name ) {
         if ( !stocks.containsKey( name ) ) {
-            return Flux.empty();
+            return Mono.empty();
         }
 
         final Stock stock = stocks.get( name );
         stocks.remove( name );
 
-        return Flux.just( stock );
+        return Mono.just( stock );
     }
 
     @NonNull
-    public Flux<Stock> findByName( @NonNull final String name ) {
+    public Mono<Stock> findByName( @NonNull final String name ) {
         if ( !stocks.containsKey( name ) ) {
-            return Flux.empty();
+            return Mono.empty();
         }
 
-        return Flux.just( stocks.get( name ) );
+        return Mono.just( stocks.get( name ) );
     }
 
     @NonNull

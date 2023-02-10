@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.util.annotation.NonNull;
 import reactor.util.annotation.Nullable;
 
@@ -20,7 +21,7 @@ public class StockController {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Flux<Stock> addStock(
+    public Mono<Stock> addStock(
             @NonNull @RequestBody final Stock stock
     ) {
         return stockService.addStock( stock );
@@ -32,7 +33,7 @@ public class StockController {
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Flux<Stock> updateStock(
+    public Mono<Stock> updateStock(
             @NonNull @RequestBody final Stock stock
     ) {
         return stockService.updateStock( stock );
@@ -64,7 +65,7 @@ public class StockController {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Flux<Stock> removeStock(
+    public Mono<Stock> removeStock(
             @NonNull @PathVariable final String name
     ) {
         return stockService.removeStock( name );
@@ -93,7 +94,7 @@ public class StockController {
             return stockService.findAll();
         }
 
-        return stockService.findByName( name );
+        return stockService.findByName( name ).flux();
     }
 
 }
