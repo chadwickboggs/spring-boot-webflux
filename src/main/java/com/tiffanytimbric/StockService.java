@@ -16,7 +16,7 @@ public class StockService {
     private final Map<String, Stock> stocks = Collections.synchronizedMap( new HashMap<>() );
 
 
-    public Mono<Stock> addStock( @NonNull final Stock stock ) {
+    public Mono<Stock> add(@NonNull final Stock stock ) {
         validate( stock );
 
         stocks.put( stock.getName(), stock );
@@ -24,9 +24,9 @@ public class StockService {
         return Mono.just( stock );
     }
 
-    public Mono<Stock> updateStock( @NonNull final Stock stock ) {
+    public Mono<Stock> update(@NonNull final Stock stock ) {
         if ( !stocks.containsKey( stock.getName() ) ) {
-            return addStock( stock );
+            return add( stock );
         }
 
         validate( stock );
@@ -36,15 +36,15 @@ public class StockService {
         return Mono.just( stock );
     }
 
-    public boolean containsStock( @NonNull final Stock stock ) {
-        return containsStock( stock.getName() );
+    public boolean contains(@NonNull final Stock stock ) {
+        return contains( stock.getName() );
     }
 
-    public boolean containsStock( @NonNull final String stockName ) {
+    public boolean contains(@NonNull final String stockName ) {
         return stocks.containsKey( stockName );
     }
 
-    public Mono<Stock> removeStock( @NonNull final Stock stock ) {
+    public Mono<Stock> remove(@NonNull final Stock stock ) {
         final String name = stock.getName();
         if ( !stocks.containsKey( name ) ) {
             return Mono.empty();
@@ -56,7 +56,7 @@ public class StockService {
     }
 
     @org.springframework.lang.NonNull
-    public Flux<Stock> removeAllStocks() {
+    public Flux<Stock> removeAll() {
         final Stock[] removedStocks = stocks.values().toArray( new Stock[0] ).clone();
 
         stocks.clear();
@@ -65,7 +65,7 @@ public class StockService {
     }
 
     @org.springframework.lang.NonNull
-    public Mono<Stock> removeStock( @NonNull final String name ) {
+    public Mono<Stock> remove(@NonNull final String name ) {
         if ( !stocks.containsKey( name ) ) {
             return Mono.empty();
         }

@@ -24,7 +24,7 @@ public class StockController {
     public Mono<Stock> addStock(
             @NonNull @RequestBody final Stock stock
     ) {
-        return stockService.addStock( stock );
+        return stockService.add( stock );
     }
 
     @NonNull
@@ -36,7 +36,7 @@ public class StockController {
     public Mono<Stock> updateStock(
             @NonNull @RequestBody final Stock stock
     ) {
-        return stockService.updateStock( stock );
+        return stockService.update( stock );
     }
 
 /*
@@ -56,7 +56,7 @@ public class StockController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public Flux<Stock> removeAllStocks() {
-        return stockService.removeAllStocks();
+        return stockService.removeAll();
     }
 
     @NonNull
@@ -65,10 +65,10 @@ public class StockController {
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Mono<Stock> removeStock(
+    public Mono<Stock> removeStockByName(
             @NonNull @PathVariable final String name
     ) {
-        return stockService.removeStock( name );
+        return stockService.remove( name );
     }
 
     @NonNull
@@ -87,7 +87,7 @@ public class StockController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Flux<Stock> findStock(
+    public Flux<Stock> findStockByName(
             @PathVariable @Nullable final String name
     ) {
         if ( StringUtils.isBlank( name ) ) {
